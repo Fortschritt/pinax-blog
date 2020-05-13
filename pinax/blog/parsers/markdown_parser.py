@@ -1,9 +1,9 @@
 from markdown import Markdown
-from markdown.inlinepatterns import IMAGE_LINK_RE, ImagePattern
+from markdown.inlinepatterns import IMAGE_LINK_RE, ImageInlineProcessor
 from pinax.images.models import Image
 
 
-class ImageLookupImagePattern(ImagePattern):
+class ImageLookupImageInlineProcessor(ImageInlineProcessor):
 
     def sanitize_url(self, url):
         if url.startswith("http"):
@@ -21,6 +21,6 @@ class ImageLookupImagePattern(ImagePattern):
 
 def parse(text):
     md = Markdown(extensions=["codehilite", "tables", "smarty", "admonition", "toc", "fenced_code"])
-    md.inlinePatterns["image_link"] = ImageLookupImagePattern(IMAGE_LINK_RE, md)
+    md.inlinePatterns["image_link"] = ImageLookupImageInlineProcessor(IMAGE_LINK_RE, md)
     html = md.convert(text)
     return html
