@@ -124,7 +124,7 @@ class StaffPostDetailView(DetailView):
     pk_url_kwarg = "post_pk"
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated() and not request.user.is_staff:
+        if not request.user.is_authenticated and not request.user.is_staff:
             raise Http404()
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
